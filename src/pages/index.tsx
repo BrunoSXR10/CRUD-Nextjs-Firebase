@@ -1,6 +1,7 @@
 import { Children } from "react"
 import Cliente from "../../client/cliente"
 import Botao from "../components/botao"
+import Formulario from "../components/formulario"
 import Layout from "../components/layout"
 import Tabela from "../components/tabela"
 
@@ -29,9 +30,11 @@ const clientes = [
         <Botao>
           Novo Cliente
         </Botao>
-        <Tabela clientes={clientes}
+        {/* <Tabela clientes={clientes}
         editarCadastro={menorEditado}
-        apagarCadastro={menorApagado}></Tabela>
+        apagarCadastro={menorApagado}></Tabela> */}
+        
+        <Formulario cliente={undefined}/>
       </Layout>
     </div>
 
