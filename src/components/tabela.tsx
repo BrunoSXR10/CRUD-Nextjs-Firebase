@@ -26,9 +26,9 @@ export default function Tabela(props: TabelaProps) {
             return (
                 <tr key={cliente.id} 
                 className={`${i % 2 === 0 ? 'bg-purple-200' : 'bg-purple-100'}`}>
-                    <td className='py-2'>{cliente.id}</td>
-                    <td className='py-2'>{cliente.nome}</td>
-                    <td className='py-2'>{cliente.idade}</td>
+                    <td className='py-2 text-black'>{cliente.id}</td>
+                    <td className='py-2 text-black'>{cliente.nome}</td>
+                    <td className='py-2 text-black'>{cliente.idade}</td>
                     {renderAcao(cliente)}
                 </tr>
             )
@@ -55,7 +55,7 @@ export default function Tabela(props: TabelaProps) {
                 {renderCabecalho()}
             </thead>
 
-            <tbody>
+            <tbody className="bg-gradient-to-b from-purple-700 via-purple-900 to-gray-500 text-gray-200">
                 {renderDados()}
             </tbody>
         </table>

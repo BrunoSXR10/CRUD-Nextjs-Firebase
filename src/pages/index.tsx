@@ -1,26 +1,50 @@
-import { Children, useState } from "react";
+import { Children, useEffect, useState } from "react";
 import Cliente from "../../client/cliente";
+import Clienterep from "../../client/clienterep";
+import ColecaoCliente from "../../server/colecaocliente";
 import Botao from "../components/botao";
 import Formulario from "../components/formulario";
 import Layout from "../components/layout";
 import Tabela from "../components/tabela";
 
 export default function Home() {
-  function menorEditado(cliente: Cliente) {
-    console.log(cliente.nome);
+
+  const repo: Clienterep = new ColecaoCliente()
+  
+  const [client, setClient] = useState<Cliente>(Cliente.void())
+  const [clientes, setClientes] = useState<Cliente[]>([])
+  const [visivel, setVisivel] = useState< "table" | "form" >("table");
+
+  useEffect(obterTodos, [])
+  
+  function obterTodos() {
+    repo.obterTodos().then((clientes => {
+      setClientes(clientes)
+      setVisivel('table')
+    }))
+
   }
 
-  function menorApagado(cliente: Cliente) {
-    console.log(`apagar ${cliente.nome}`);
+  function menorEditado(client: Cliente) {
+    setClient(client)
+    setVisivel('form')
   }
 
-  const [visivel, setVisivel] = useState<"table" | "form">("table");
+  async function menorApagado(client: Cliente) {
+    await repo.apagar(client)
+    obterTodos()
+  }
 
-  const clientes = [
-    new Cliente("1", "Bruno", 19),
-    new Cliente("2", "Alice", 20),
-    new Cliente("3", "Café", 30),
-  ];
+  function novoCliente() {
+    setClient(Cliente.void())
+    setVisivel('form')
+  }
+
+  async function salvarCliente(client : Cliente) {
+    await repo.salvar(client)
+    obterTodos()
+  }
+
 
   return (
     <div
@@ -33,7 +57,7 @@ export default function Home() {
         {visivel === "table" ? (
           <>
             <Botao 
-            onclick={() => setVisivel('form')}
+            onclick={novoCliente}
             cor="green">Novo Cliente</Botao>
             <Tabela
               clientes={clientes}
@@ -43,8 +67,10 @@ export default function Home() {
           </>
         ) : (
           <>
-            <Formulario cliente={clientes[1]} 
-            cancelado={() => setVisivel('table')}/>
+            <Formulario cliente={client} 
+            clienteMudou={salvarCliente}
+            cancelado={() => setVisivel('table')
+            }/>
           </>
         )}
       </Layout>

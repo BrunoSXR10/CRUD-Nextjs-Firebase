@@ -1,4 +1,5 @@
 interface EntradaProps {
+  tipo: string;
   texto: string;
   valor: any;
   somenteLeitura?: boolean;
@@ -8,9 +9,9 @@ interface EntradaProps {
 export default function Entrada(props: EntradaProps) {
   return (
     <div className="flex flex-col">
-      <label htmlFor="">{props.texto}</label>
+      <label>{props.texto}</label>
       <input 
-        type={'text' || 'number'} 
+        type={props.tipo} 
         value={props.valor}
         readOnly={props.somenteLeitura}
         onChange={(e) => props.valorMudou?.(e.target.value)}

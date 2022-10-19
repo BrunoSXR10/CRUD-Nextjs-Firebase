@@ -11,7 +11,7 @@ export default function Botao(props: BotaoProps) {
       <button
         onClick={props.onclick}
         className={`bg-gradient-to-r
-         from-emerald-500 to-${props.cor}-900
+         from-emerald-500 to-green-900
          text-white rounded-md py-2 px-4
          inline-block
          `}
